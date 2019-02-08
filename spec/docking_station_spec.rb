@@ -33,4 +33,12 @@ describe DockingStation do
    station = DockingStation.new
    expect(station.capacity).to eq DockingStation::DEFAULT_CAPACITY
  end
+
+ it "Should not give out a broken bike" do
+   station = DockingStation.new
+   bike = station.release_bike
+   bike.broken
+   station.dock(bike)
+   expect(station.release_bike.working?).to eq true
+ end
 end
