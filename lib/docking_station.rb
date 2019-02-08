@@ -1,6 +1,7 @@
 require_relative "bike"
 
 class DockingStation
+  DEFAULT_CAPACITY = 20
 def initialize
 @bikes = []
 end
@@ -15,7 +16,7 @@ def dock(bike)
   end
 
   private def full?
-    fail 'Docking station full' if @bikes.count >= 20
+    fail 'Docking station full' if @bikes.count >= DEFAULT_CAPACITY
   end
 
   private def empty?
