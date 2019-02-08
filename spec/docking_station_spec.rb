@@ -28,4 +28,9 @@ describe DockingStation do
    station = DockingStation.new(10)
    expect { station.dock Bike.new }. to raise_error "Docking station full"
  end
+
+ it "Should show the capacity of the station" do
+   station = DockingStation.new
+   expect(station.capacity).to eq DockingStation::DEFAULT_CAPACITY
+ end
 end
