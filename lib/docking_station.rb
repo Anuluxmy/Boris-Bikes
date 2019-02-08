@@ -11,7 +11,11 @@ def initialize(capacity = DEFAULT_CAPACITY)
 end
 def release_bike
   empty?
-  @bikes.pop
+  @working_bikes = @bikes.select {|bike| bike.working? == true}
+  @broken_bikes = @bikes.select {|bike| bike.working? == false}
+  out_going_bike = @working_bikes.pop
+  @bikes = @working_bikes + @broken_bikes
+  out_going_bike
 end
 
 def dock(bike)
