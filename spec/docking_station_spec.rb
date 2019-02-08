@@ -3,28 +3,29 @@ require "docking_station"
 describe DockingStation do
   it {is_expected.to respond_to :release_bike}
 
-  describe "#release_bike" do
-    it "releases a bike if bike available or gives no bikes" do
-      expect { subject.release_bike }.to raise_error "No bikes available"
+  it "releases a bike if bike available or gives no bikes" do
+    station = DockingStation.new(1)
+    station.release_bike
+    expect { station.release_bike }.to raise_error "No bikes available"
   end
-end
 
-describe "#dock" do
-     it "gives error when the the dock is full" do
-       DockingStation::DEFAULT_CAPACITY.times { subject.dock Bike.new }
-       expect { subject.dock Bike.new }.to raise_error "Docking station full"
-      end
-   end
+  it "gives error when the the dock is full" do
+    station = DockingStation.new
+    expect { station.dock Bike.new }.to raise_error "Docking station full"
+  end
 
   it "can get a bike and its working" do
-      bike = Bike.new
-      subject.dock(bike)
-      expect(bike.working?).to eq true
-    end
+    station = DockingStation.new
+    bike = station.release_bike
+    expect(bike.working?).to eq true
+  end
 
   it "can make docking possible" do
     expect(subject).to respond_to :dock
   end
 
-
-  end
+ it "shouldn't let to dock an extra bike if there is more bike than capacity" do
+   station = DockingStation.new(10)
+   expect { station.dock Bike.new }. to raise_error "Docking station full"
+ end
+end
